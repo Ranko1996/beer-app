@@ -14,17 +14,16 @@ export class BeerListComponent implements OnInit{
   constructor(private beerService: BeerService) { }
 
    ngOnInit(): void {
-    // Pozovi metodu getBeers() iz BeerService servisa
     this.beerService.getBeers().subscribe({
       next: (data) => {
-        this.beers = data; // Spremi podatke (opcionalno, ali korisno za prikaz)
-        console.log('Dohvaćena piva:', this.beers); // Ispiši podatke u konzolu
+        this.beers = data; 
+        console.log('Dohvaćena piva:', this.beers);
       },
       error: (err) => {
-        console.error('Greška pri dohvatu piva:', err); // Logiraj grešku ako dođe do problema
+        console.error('Greška pri dohvatu piva:', err); 
       },
       complete: () => {
-        console.log('Dohvat piva završen.'); // Opcionalno: poruka kada je Observable gotov
+        console.log('Dohvat piva završen.'); 
       }
     });
   }
