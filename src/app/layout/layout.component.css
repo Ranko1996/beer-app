@@ -1,0 +1,47 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Allows this component to take up available space */
+}
+
+.app-header {
+  position: relative;
+  width: 100%;
+  padding: 0;
+  background-color: transparent;
+  border-bottom: none;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.header-drawing {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.company-logo {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  height: 60px;
+  width: auto;
+  z-index: 10;
+}
+
+.app-footer {
+  background-color: #ffc41c;
+  width: 100%;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto; /* This is key for pushing it down */
+}
+
+.footer-logo {
+  height: 50px;
+  width: auto;
+  display: block;
+}
+
