@@ -1,0 +1,30 @@
+<div class="modal-backdrop" *ngIf="isOpen"></div>
+
+<div class="modal" *ngIf="isOpen">
+  <div class="modal-content">
+    <button class="close-button" (click)="onClose()">X</button>
+
+    <ng-container *ngIf="isLoading">
+      <p class="loading-message">Učitavanje detalja piva...</p>
+    </ng-container>
+
+    <ng-container *ngIf="error">
+      <p class="error-message">{{ error }}</p>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoading && !error && beerDetails">
+      <div class="modal-header">
+        <h2>{{ beerDetails.name }}</h2>
+      </div>
+      <div class="modal-body">
+        <img [src]="beerDetails.image_url" alt="{{ beerDetails.name }}" class="modal-beer-image">
+        <div class="description-container">
+          <h3>Opis:</h3>
+          <p>{{ beerDetails.description }}</p>
+          <p><strong>ABV:</strong> {{ beerDetails.abv }}%</p>
+          </div>
+      </div>
+    </ng-container>
+
+  </div>
+</div>

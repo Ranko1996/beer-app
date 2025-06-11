@@ -1,0 +1,18 @@
+<div class="beer-card">
+  <div class="image-wrapper">
+    <img [src]="beer.image_url" alt="{{ beer.name }}" class="beer-image">
+    <img 
+      [src]="isFavorite ? 'assets/star-selected-24px.svg' : 'assets/star_outline-24px.svg'" 
+      alt="{{ isFavorite ? 'Remove from favorites' : 'Add to favorites' }}" 
+      class="favorite-icon"
+      (click)="toggleFavorite($event)" 
+    >
+  </div>
+  <div class="beer-info">
+    <p class="beer-name-card">{{ beer.name }}</p> 
+    <button class="details-button" (click)="onDetailsClick($event)">
+      <img src="assets/info-24px.svg" alt="Info" class="details-icon">
+      Details
+    </button>
+  </div>
+</div>
