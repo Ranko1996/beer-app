@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core'; 
 import { BeerService } from '../../services/beer.service';
 import { Beer } from '../../models/beer.model';
 import { CommonModule } from '@angular/common';
@@ -7,7 +7,7 @@ import { BeerDetailsModalComponent } from '../beer-details-modal/beer-details-mo
 import { FormsModule } from '@angular/forms';
 import { FavoriteService } from '../../services/favorite.service';
 import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
-import { Observable } from 'rxjs'; // Dodaj Observable import
+import { Observable } from 'rxjs'; 
 
 @Component({
   selector: 'app-beer-list',
@@ -36,6 +36,18 @@ export class BeerListComponent implements OnInit{
     ceil: 100,
   };
 
+  showScrollToTopButton: boolean = false;
+  private scrollThreshold: number = 200;
+
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    if (window.scrollY > this.scrollThreshold) {
+      this.showScrollToTopButton = true;
+    } else {
+      this.showScrollToTopButton = false;
+    }
+  }
+
   constructor(private beerService: BeerService, private favoriteService: FavoriteService) { }
 
   ngOnInit(): void {
@@ -43,22 +55,20 @@ export class BeerListComponent implements OnInit{
   }
 
   private fetchAndApplyFilters(): void {
-  const nameFilter = this.searchBeer.trim() ? this.searchBeer.trim() : null;
+    const nameFilter = this.searchBeer.trim() ? this.searchBeer.trim() : null;
+    const abvGtFilter = this.minValue;
+    const abvLtFilter = this.maxValue;
 
-
-  const abvGtFilter = this.minValue; 
-  const abvLtFilter = this.maxValue;
-
-  this.beerService.getFilteredBeers(nameFilter, abvGtFilter, abvLtFilter).subscribe({
-    next: (data: Beer[]) => {
-      this.allBeersCache = data; 
-      this.applyLocalFiltersAndSort(); 
-    },
-    error: (err) => {
-      console.error('Greška pri dohvatu piva:', err);
-    }
-  });
-}
+    this.beerService.getFilteredBeers(nameFilter, abvGtFilter, abvLtFilter).subscribe({
+      next: (data: Beer[]) => {
+        this.allBeersCache = data;
+        this.applyLocalFiltersAndSort();
+      },
+      error: (err) => {
+        console.error('Greška pri dohvatu piva:', err);
+      }
+    });
+  }
 
   private applyLocalFiltersAndSort(): void {
     let processedBeers = [...this.allBeersCache];
@@ -73,7 +83,7 @@ export class BeerListComponent implements OnInit{
   }
 
   onSearch(): void {
-    this.fetchAndApplyFilters(); 
+    this.fetchAndApplyFilters();
   }
 
   onFavoriteToggle(): void {
@@ -83,7 +93,7 @@ export class BeerListComponent implements OnInit{
   onSortChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.sortCriteria = selectElement.value;
-    this.applyLocalFiltersAndSort(); 
+    this.applyLocalFiltersAndSort();
   }
 
   sortBeers(beersToSort: Beer[]): void {
@@ -106,5 +116,12 @@ export class BeerListComponent implements OnInit{
   closeBeerDetailsModal(): void {
     this.showBeerDetailsModal = false;
     this.selectedBeerId = null;
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   }
 }

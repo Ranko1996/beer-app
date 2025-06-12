@@ -180,3 +180,34 @@
   margin-top: 50px;
   grid-column: 1 / -1;
 }
+
+
+.scroll-to-top-button {
+  position: fixed; 
+  bottom: 20px;    
+  right: 20px;    
+  background-color: #ffc41c; 
+  color: #333;
+  border: none;
+  border-radius: 50%; 
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  transition: opacity 0.3s ease-in-out, transform 0.2s ease-in-out;
+  z-index: 1000; 
+}
+
+.scroll-to-top-button:hover {
+  background-color: #e0ac00; 
+  transform: translateY(-2px);
+}
+
+.scroll-to-top-button img {
+  width: 24px; 
+  height: 24px;
+  filter: brightness(0.2);
+}

@@ -14,7 +14,7 @@
   </div>
 
   <div class="filter-group abv-group">
-    <label for="abv-slider">Alcohol content (%)</label> 
+    <label for="abv-slider">Alcohol content (%)</label>
     <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options" (userChangeEnd)="onAbvChange()" ></ngx-slider>
   </div>
 
@@ -24,25 +24,24 @@
       type="checkbox"
       id="favorite-checkbox"
       class="favorite-checkbox"
-      [(ngModel)]="showFavoritesOnly"  
+      [(ngModel)]="showFavoritesOnly"
       (change)="onFavoriteToggle()"
     >
   </div>
 
   <div class="filter-group sort-group">
-  <label for="sort-dropdown">Sort by:</label>
-  <select
-    id="sort-dropdown"
-    class="sort-dropdown"
-    [(ngModel)]="sortCriteria"
-    (change)="onSortChange($event)"
-  >
-    <option value="name">Name</option>
-    <option value="abv">ABV</option>
-  </select>
+    <label for="sort-dropdown">Sort by:</label>
+    <select
+      id="sort-dropdown"
+      class="sort-dropdown"
+      [(ngModel)]="sortCriteria"
+      (change)="onSortChange($event)"
+    >
+      <option value="name">Name</option>
+      <option value="abv">ABV</option>
+    </select>
+  </div>
 </div>
-</div>
-
 
 <div class="beer-cards-container">
   <ng-container *ngIf="beers.length > 0; else noBeers">
@@ -61,3 +60,7 @@
   [isOpen]="showBeerDetailsModal"
   (close)="closeBeerDetailsModal()">
 </app-beer-details-modal>
+
+<button *ngIf="showScrollToTopButton" class="scroll-to-top-button" (click)="scrollToTop()">
+  <img src="assets/scroll-top.svg" alt="Scroll to Top">
+</button>
