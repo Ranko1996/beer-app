@@ -1,220 +1,3 @@
-.beer-list-title {
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 30px;
-  color: #333;
-}
-
-.beer-cards-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  margin-bottom: 70px;
-}
-
-
-.image-wrapper {
-  position: relative; 
-  width: 100%;
-  height: 200px; 
-  background-color: #f9f9f9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden; 
-}
-
-.beer-image {
-  max-width: 100%;
-  max-height: 100%; 
-  object-fit: contain;
-  display: block; 
-  padding: 10px; 
-}
-
-.favorite-icon {
-  position: absolute; 
-  top: 10px;
-  right: 10px;
-  width: 24px; 
-  height: 24px;
-  cursor: pointer; 
-  z-index: 5; 
-}
-
-.beer-info {
-  padding: 15px;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center; 
-}
-
-.beer-abv {
-  font-size: 1.1em; 
-  font-weight: bold; 
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.details-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 20px;
-  background-color: #ffc41c; 
-  color: #333; 
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1em;
-  font-weight: bold;
-  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
-}
-
-.details-button:hover {
-  background-color: #e0ac00; 
-  transform: translateY(-2px);
-}
-
-.details-icon {
-  width: 20px; 
-  height: 20px;
-  margin-right: 8px; 
-  filter: brightness(0.2); 
-}
-
-
-
-/* --- Stilovi za filter i sort kontrole --- */
-
-.filter-controls {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  padding: 20px;
-  margin-bottom: 30px;
-}
-
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 5px;
-}
-
-.search-group {
-  position: relative;
-}
-
-.search-input {
-  padding: 10px 15px 10px 40px;
-  border: 1px solid #ccc;
-  border-radius: 25px;
-  font-size: 1em;
-  width: 250px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.search-input:focus {
-  border-color: #ffc41c;
-  box-shadow: 0 0 0 3px rgba(255, 196, 28, 0.3);
-  outline: none;
-}
-
-.search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
-  opacity: 0.6;
-}
-
-.abv-group label,
-.favorite-group label,
-.sort-group label {
-  font-weight: bold;
-  color: #555;
-  white-space: nowrap;
-}
-
-.abv-slider {
-  width: 150px;
-  -webkit-appearance: none;
-  appearance: none;
-  background: #ddd;
-  height: 8px;
-  border-radius: 5px;
-  outline: none;
-  transition: opacity .2s;
-}
-
-.abv-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #ffc41c;
-  cursor: pointer;
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 1px #ffc41c;
-}
-
-.abv-slider::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #ffc41c;
-  cursor: pointer;
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 1px #ffc41c;
-}
-
-.favorite-checkbox {
-  width: 20px;
-  height: 20px;
-  accent-color: #ffc41c;
-  cursor: pointer;
-}
-
-.sort-dropdown {
-  padding: 10px 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1em;
-  background-color: #fff;
-  cursor: pointer;
-  appearance: none;
-  background-image: url('data:image/svg+xml;utf8,<svg fill="%23333333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 20px;
-}
-
-.sort-dropdown:focus {
-  border-color: #ffc41c;
-  box-shadow: 0 0 0 3px rgba(255, 196, 28, 0.3);
-  outline: none;
-}
-
-.no-beers-message {
-    text-align: center;
-    font-size: 1.2em;
-    color: #888;
-    margin-top: 50px;
-    grid-column: 1 / -1;
-}
-
-
 .beer-cards-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -308,9 +91,92 @@
   transform: translateY(-2px);
 }
 
-.details-icon {
+.filter-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.search-group {
+  position: relative; 
+}
+
+.search-input {
+  padding: 10px 15px 10px 40px; 
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  font-size: 1em;
+  width: 150px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+  border-color: #ffc41c;
+  box-shadow: 0 0 0 3px rgba(255, 196, 28, 0.3);
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  opacity: 0.6;
+  pointer-events: none; 
+}
+
+.abv-group label,
+.favorite-group label,
+.sort-group label {
+  font-weight: bold;
+  color: #555;
+  white-space: nowrap;
+}
+
+.favorite-checkbox {
   width: 20px;
   height: 20px;
-  margin-right: 8px;
-  filter: brightness(0.2);
+  accent-color: #ffc41c;
+  cursor: pointer;
+}
+
+.sort-dropdown {
+  padding: 10px 17px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1em;
+  background-color: #fff;
+  cursor: pointer;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23333333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 2px center;
+  background-size: 20px;
+}
+
+.sort-dropdown:focus {
+  border-color: #ffc41c;
+  box-shadow: 0 0 0 3px rgba(255, 196, 28, 0.3);
+  outline: none;
+}
+
+.no-beers-message {
+  text-align: center;
+  font-size: 1.2em;
+  color: #888;
+  margin-top: 50px;
+  grid-column: 1 / -1;
 }

@@ -5,7 +5,7 @@
       placeholder="Filter by name..."
       class="search-input"
       [(ngModel)]="searchBeer"
-      (input)="onSearch()"
+      (keydown.enter)="onSearch()"
     >
     <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
       <path d="M0 0h24v24H0V0z" fill="none"/>
@@ -15,38 +15,34 @@
 
   <div class="filter-group abv-group">
     <label for="abv-slider">Alcohol content (%)</label> 
-    <input
-      type="range"
-      id="abv-slider"
-      min="0"
-      max="100"
-      step="1"
-      value="0" class="abv-slider"
-    >
+    <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options" (userChangeEnd)="onAbvChange()" ></ngx-slider>
   </div>
 
   <div class="filter-group favorite-group">
+    <label for="favorite-checkbox">Show only favorites</label>
     <input
       type="checkbox"
       id="favorite-checkbox"
       class="favorite-checkbox"
+      [(ngModel)]="showFavoritesOnly"  
+      (change)="onFavoriteToggle()"
     >
-    <label for="favorite-checkbox">Show only favorites</label>
   </div>
 
   <div class="filter-group sort-group">
-    <label for="sort-dropdown">Sort by:</label>
-    <select
-      id="sort-dropdown"
-      class="sort-dropdown"
-    >
-      <option value="name_asc">Name (A-Z)</option>
-      <option value="name_desc">Name (Z-A)</option>
-      <option value="abv_asc">ABV (Low to High)</option>
-      <option value="abv_desc">ABV (High to Low)</option>
-    </select>
-  </div>
+  <label for="sort-dropdown">Sort by:</label>
+  <select
+    id="sort-dropdown"
+    class="sort-dropdown"
+    [(ngModel)]="sortCriteria"
+    (change)="onSortChange($event)"
+  >
+    <option value="name">Name</option>
+    <option value="abv">ABV</option>
+  </select>
 </div>
+</div>
+
 
 <div class="beer-cards-container">
   <ng-container *ngIf="beers.length > 0; else noBeers">

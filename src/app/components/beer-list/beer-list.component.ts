@@ -5,11 +5,14 @@ import { CommonModule } from '@angular/common';
 import { BeerCardComponent } from '../beer-card/beer-card.component';
 import { BeerDetailsModalComponent } from '../beer-details-modal/beer-details-modal.component';
 import { FormsModule } from '@angular/forms';
+import { FavoriteService } from '../../services/favorite.service';
+import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
+import { Observable } from 'rxjs'; // Dodaj Observable import
 
 @Component({
   selector: 'app-beer-list',
   standalone: true,
-  imports: [CommonModule, BeerCardComponent, BeerDetailsModalComponent, FormsModule ],
+  imports: [CommonModule, BeerCardComponent, BeerDetailsModalComponent, FormsModule, NgxSliderModule ],
   templateUrl: './beer-list.component.html',
   styleUrl: './beer-list.component.css'
 })
@@ -21,54 +24,87 @@ export class BeerListComponent implements OnInit{
 
   searchBeer: string = '';
 
-  constructor(private beerService: BeerService) { }
+  showFavoritesOnly: boolean = false;
+  private allBeersCache: Beer[] = [];
+
+  sortCriteria: string = 'name';
+
+  minValue: number = 0;
+  maxValue: number = 100;
+  options: Options = {
+    floor: 0,
+    ceil: 100,
+  };
+
+  constructor(private beerService: BeerService, private favoriteService: FavoriteService) { }
 
   ngOnInit(): void {
-    this.loadAllBeers();  
+    this.fetchAndApplyFilters();
   }
 
- loadAllBeers(): void {
-  this.beerService.getBeers().subscribe({
-      next: (data: Beer[]) => {
-        this.beers = data; 
-        console.log('Dohvaćena piva:', this.beers);
-      },
-      error: (err) => {
-        console.error('Greška pri dohvatu piva:', err); 
-      },
-      complete: () => {
-        console.log('Dohvat piva završen.'); 
-      }
-    });
- }
+  private fetchAndApplyFilters(): void {
+  const nameFilter = this.searchBeer.trim() ? this.searchBeer.trim() : null;
 
-   onSearch(): void {
-    if (this.searchBeer.trim()) { // Provjeri da searchBeer nije prazan
-      this.beerService.searchBeersByName(this.searchBeer).subscribe({
-        next: (data: Beer[]) => {
-          this.beers = data;
-          console.log('Pronađena piva po pretrazi:', this.beers);
-        },
-        error: (err) => {
-          console.error('Greška pri pretrazi piva:', err);
-        }
-      });
-    } else {
-      // Ako je polje za pretragu prazno, ponovno dohvati sva piva
-      this.loadAllBeers();
+
+  const abvGtFilter = this.minValue; 
+  const abvLtFilter = this.maxValue;
+
+  this.beerService.getFilteredBeers(nameFilter, abvGtFilter, abvLtFilter).subscribe({
+    next: (data: Beer[]) => {
+      this.allBeersCache = data; 
+      this.applyLocalFiltersAndSort(); 
+    },
+    error: (err) => {
+      console.error('Greška pri dohvatu piva:', err);
+    }
+  });
+}
+
+  private applyLocalFiltersAndSort(): void {
+    let processedBeers = [...this.allBeersCache];
+    if (this.showFavoritesOnly) {
+      const favoriteIds = this.favoriteService.getFavorites().map(fav => fav.id);
+      processedBeers = processedBeers.filter(beer => favoriteIds.includes(beer.id));
+    }
+
+    this.sortBeers(processedBeers);
+
+    this.beers = processedBeers;
+  }
+
+  onSearch(): void {
+    this.fetchAndApplyFilters(); 
+  }
+
+  onFavoriteToggle(): void {
+    this.applyLocalFiltersAndSort();
+  }
+
+  onSortChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.sortCriteria = selectElement.value;
+    this.applyLocalFiltersAndSort(); 
+  }
+
+  sortBeers(beersToSort: Beer[]): void {
+    if (this.sortCriteria === 'name') {
+      beersToSort.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (this.sortCriteria === 'abv') {
+      beersToSort.sort((a, b) => (a.abv || 0) - (b.abv || 0));
     }
   }
 
+  onAbvChange(): void {
+    this.fetchAndApplyFilters();
+  }
+
   openBeerDetailsModal(beerId: number): void {
-    console.log('openBeerDetailsModal called with ID:', beerId); 
-    this.selectedBeerId = beerId; 
-    this.showBeerDetailsModal = true; 
-    console.log('Modal state after open:', this.selectedBeerId, this.showBeerDetailsModal); 
+    this.selectedBeerId = beerId;
+    this.showBeerDetailsModal = true;
   }
 
   closeBeerDetailsModal(): void {
-    console.log('closeBeerDetailsModal called.'); 
-    this.showBeerDetailsModal = false; 
+    this.showBeerDetailsModal = false;
     this.selectedBeerId = null;
   }
 }
